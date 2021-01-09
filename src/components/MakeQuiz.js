@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Main = styled.div`
     margin: 0;
-    background-color: rgb(236, 236, 236);
-
+    background-color: rgb(236, 236, 236); no-repeat center center fixed;
+    background-position: top;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 100%;
+    min-width: 1024px;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
 
 header{
     margin: 8px 12px;
@@ -76,44 +85,62 @@ button{
 }
 `;
 
-const Makequiz = () => {
+
+const Makequiz = ({writing, number, title}) => {
+    const [loading, setLoading] = useState(false),
+      [problemWriting, setProblemWriting] = useState('이곳에 지문을 입력(안 넣어도 됨)'),
+      [problemNumber, setProblemNumber] = useState(''),
+      [problemName, setProblemName] = useState('이곳에 문제를 입력'),
+      [problemNameChange, setProblemNameChange] = useState(''),
+      [problemWritingChange, setProblemWritingChange] = useState(''),
+      [submit, setSubmit] = useState(false);
+
+    useEffect(() => {
+        if(loading === false){
+            setProblemWriting(writing);
+            setProblemNumber(number);
+            setProblemName(title);
+            setLoading(true);
+        }
+    }, [loading])
+    useEffect(() => {
+        if(problemNameChange !== ' '){
+            setProblemName(problemNameChange);
+            setProblemNameChange('')
+        }
+    }, [problemNameChange])
+
+    useEffect(() => {
+        if(problemWritingChange !== ' '){
+            setProblemWriting(problemWritingChange);
+            setProblemWritingChange('');
+        }
+    }, [problemWritingChange])
+
     return(
-       <Main>카나미 핸섬</Main>
-    )
-}
-
-export default Makequiz
-
-/*
- <Main>
-            <header>1번 문제</header>
+        <Main>
+            <header>{problemNumber}번 문제</header>
             <hr/>
             <div class="content">
                 <div class="left-part">
                     <div class="prompt">
                         <p>
-                            파이: 여기 이상해요 ㅠㅠ<br/>
-                            냐코: 이이ㅣ잉ㅇ 앗살라말라이쿰!!!
+                            <input placeholder = "지문을 넣어주세요(필수아님)"/>
                         </p>
                     </div>
                 </div>
                 <div class="right-part">
                     <div class="question">
-                        <h2>다음에 제시된 내용 중 옳지 않은 것은?</h2>
+                        <input placeholder = "문제를 입력해주세요"/>
                     </div>
-                    <div class="answer">
-                        <h4>1번</h4><hr/><label><input type="checkbox" name="answer-one"/>나는 바브다</label>
-                        <h4>2번</h4><hr/><label><input type="checkbox" name="answer-two"/>나는 바브다</label>
-                        <h4>3번</h4><hr/><label><input type="checkbox" name="answer-three"/>나는 바브다</label>
-                        <h4>4번</h4><hr/><label><input type="checkbox" name="answer-four"/>나는 바브다</label>
-                        <h4>5번</h4><hr/><label><input type="checkbox" name="answer-five"/>나는 바브다</label>
-                    </div>
+                    <form class="answer"></form>
                     <ul class="down-side-buttons">
-                        <li><button>문제저장</button></li>
-                        <li><button></button></li>
-                        <li><button></button></li>
+                        <li><button onClick = {setSubmit()}>문제저장</button></li>
                     </ul>
                 </div>
             </div>
         </Main>
-        */
+    )
+}
+
+export default Makequiz

@@ -6,7 +6,7 @@ import MakeQuiz from './pages/MakeQuiz';
 function App() {
   return(
     <BrowserRouter>
-      <Route path = "/" component = {MainPage}/>
+      <Route path = "/" component = {MainPage} exact/>
       <Route path = "/Quiz" component = {MakeQuiz}/>
     </BrowserRouter>
   );

@@ -1,9 +1,9 @@
 import React from 'react';
-import quiz from '../components/MakeQuiz';
+import Quiz from '../components/MakeQuiz';
 
 const MakeQuiz = () => {
     return(
-        <div>{quiz}</div>
+        <Quiz/>
     )
 }
 
